@@ -22,5 +22,6 @@ def main():
     account = Account(email, password)
     endpoint = TicketEndPoint(account)
     (endpoint.get())
+    endpoint.get_id(1)
 
 main()

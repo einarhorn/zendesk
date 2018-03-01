@@ -5,9 +5,30 @@ class TicketEndPoint(EndPoint):
     def __init__(self, account):
         super(TicketEndPoint, self).__init__(account)
 
-    def api_endpoint(self):
+    def _api_object(self):
+        """"Return a string representing the specific api endpoint"""
+        return Ticket
+
+###########
+#  GET
+###########
+
+    def _get_endpoint(self):
         """"Return a string representing the specific api endpoint"""
         return "/api/v2/tickets.json"
+
+    def _get_key(self):
+        """Return the key of the json object that we are interested in returning"""
+        return "tickets"
+
+###########
+#  GET_ID
+###########
+
+    def _get_id_endpoint(self):
+        """"Return a string representing the specific api endpoint"""
+        return "/api/v2/tickets/{id}.json"
     
-    def api_object(self):
-        return Ticket
+    def _get_id_key(self):
+        """Return the key of the json object that we are interested in returning"""
+        return "ticket"
