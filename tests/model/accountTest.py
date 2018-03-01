@@ -4,7 +4,7 @@ import unittest
 import sys
 from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-from src.account import Account
+from src.model.account import Account
 
 class TestAccount(unittest.TestCase):
 

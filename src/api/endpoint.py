@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 import json
 import logging
 
-from ticket import Ticket
+from ..model.ticket import Ticket
 
 class EndPoint(object):
     """An abstract ZenDesk API endpoint

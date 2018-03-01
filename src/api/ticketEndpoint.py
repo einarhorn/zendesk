@@ -1,5 +1,5 @@
 from endpoint import EndPoint
-from ticket import Ticket
+from ..model.ticket import Ticket
 
 class TicketEndPoint(EndPoint):
     def __init__(self, account):

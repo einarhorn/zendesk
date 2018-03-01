@@ -4,9 +4,9 @@ import unittest
 import sys, os
 from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-from src.ticketEndpoint import TicketEndPoint
-from src.ticket import Ticket
-from src.account import Account
+from src.api.ticketEndpoint import TicketEndPoint
+from src.model.ticket import Ticket
+from src.model.account import Account
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from accountInfo import email, password

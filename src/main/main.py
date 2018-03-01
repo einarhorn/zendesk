@@ -14,8 +14,8 @@
 import os, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from accountInfo import email, password
-from account import Account
-from ticketEndpoint import TicketEndPoint
+from ..model.account import Account
+from ..api.ticketEndpoint import TicketEndPoint
 
 
 def main():
