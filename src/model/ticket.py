@@ -43,7 +43,15 @@ class Ticket(object):
         self.sharing_agreement_ids = json_object['sharing_agreement_ids']
 
     def get_ticket_as_list(self, key_list):
+        """Returns the requested ticket attributes in a list
+        
+        An invalid attribute will place a None in the list
+
+        Args:
+            key_list (list): List of Ticket attributes
+        """
+
         return_list = []
         for key in key_list:
-            return_list.append(getattr(self, key))
+            return_list.append(getattr(self, key, None))
         return return_list

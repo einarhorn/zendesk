@@ -3,7 +3,7 @@ import unittest
 # For sibling directory import
 import sys
 from os import path
-sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+sys.path.append( path.dirname (path.dirname( path.dirname( path.abspath(__file__) ) ) ) )
 from src.model.ticket import Ticket
 
 class TestTicket(unittest.TestCase):
@@ -18,6 +18,31 @@ class TestTicket(unittest.TestCase):
         self.assertEqual(ticket.updated_at, u'2018-03-01T01:09:31Z')
         self.assertEqual(ticket.submitter_id, 360770832034)
 
+    def test_get_ticket_as_list_valid_inputs(self):
+        ticket = Ticket(self.json_object)
+
+        # Get 'id', 'follower_ids' fields as list
+        request_fields = ['id', 'follower_ids']
+        field_list = ticket.get_ticket_as_list(request_fields)
+        self.assertListEqual(field_list, [1, []])
+
+        # Get 'updated_at', 'submitter_id' fields as list
+        request_fields = ['updated_at', 'submitter_id']
+        field_list = ticket.get_ticket_as_list(request_fields)
+        self.assertListEqual(field_list, [u'2018-03-01T01:09:31Z', 360770832034])
+    
+    def test_get_ticket_as_list_invalid_inputs(self):
+        ticket = Ticket(self.json_object)
+
+        # Get 'id', 'made_up_field' fields as list
+        request_fields = ['id', 'made_up_field']
+        field_list = ticket.get_ticket_as_list(request_fields)
+        self.assertListEqual(field_list, [1, None])
+
+        # Get 'fake', 'submitter_id' fields as list
+        request_fields = ['fake', 'submitter_id']
+        field_list = ticket.get_ticket_as_list(request_fields)
+        self.assertListEqual(field_list, [None, 360770832034])
 
 if __name__ == '__main__':
     unittest.main()
