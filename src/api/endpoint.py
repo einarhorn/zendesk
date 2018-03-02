@@ -5,7 +5,10 @@ from requests.auth import HTTPBasicAuth
 import json
 import logging
 
-from ..model.ticket import Ticket
+import sys
+from os import path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+from model.ticket import Ticket
 
 class EndPoint(object):
     """An abstract ZenDesk API endpoint

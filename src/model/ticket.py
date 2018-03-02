@@ -1,5 +1,19 @@
-class Ticket():
+class Ticket(object):
+    """A ZenDesk ticket object
+    Tickets are the means through which your end users (customers) communicate with agents in Zendesk Support.
+
+    Attributes:
+        See here for full list of attributes and descriptions:
+        https://developer.zendesk.com/rest_api/docs/core/tickets
+
+    """
     def __init__(self, json_object):
+        """Initializes a new Ticket object from a json object
+
+        Args:
+            json_object (dict): Dictionary representation of a Ticket (typically from an API response)
+
+        """
         self.id = json_object['id']
         self.url = json_object['url']
         self.external_id=json_object['external_id']
@@ -27,3 +41,9 @@ class Ticket():
         self.custom_fields = json_object['custom_fields']
         self.satisfaction_rating = json_object['satisfaction_rating']
         self.sharing_agreement_ids = json_object['sharing_agreement_ids']
+
+    def get_ticket_as_list(self, key_list):
+        return_list = []
+        for key in key_list:
+            return_list.append(getattr(self, key))
+        return return_list
