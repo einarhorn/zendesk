@@ -86,8 +86,11 @@ class EndPoint(object):
         """Return a list of all objects"""
         if url is None:
             url = self.get_endpoint_url()
-
         response = self._generate_get_request(url)
+
+        # If request could not be made, response is None
+        if response is None:
+            return []
 
         # For successful API call, response code will be 200 (OK)
         if(response.ok):
@@ -106,7 +109,7 @@ class EndPoint(object):
             return object_list
         else:
             # If response code is not ok (200), print the resulting http error code with description
-            self._generate_bad_response_error(response)
+            self._generate_bad_response_error(url, response)
             return []
     
 ###########
@@ -129,7 +132,12 @@ class EndPoint(object):
 
     def get_id(self, id):
         """Return a single object"""
-        response = self._generate_get_request(self._get_id_endpoint_url(id))
+        url = self._get_id_endpoint_url(id)
+        response = self._generate_get_request(url)
+
+        # If request could not be made, response is None
+        if response is None:
+            return []
 
         # For successful API call, response code will be 200 (OK)
         if(response.ok):
@@ -140,7 +148,7 @@ class EndPoint(object):
             return content
         else:
             # If response code is not ok (200), print the resulting http error code with description
-            self._generate_bad_response_error(response)
+            self._generate_bad_response_error(url, response)
             return None
 
 ###########
@@ -149,15 +157,21 @@ class EndPoint(object):
 
     def _generate_get_request(self, url):
         """Generate a GET request using requests library"""
-        return requests.get(
-            url,
-            auth=HTTPBasicAuth(self.account.email, self.account.password),
-            verify=True
-        )
-    def _generate_bad_response_error(self,response):
+        try:
+            request = requests.get(
+                url,
+                auth=HTTPBasicAuth(self.account.email, self.account.password),
+                verify=True
+            )
+            return request
+        except Exception:
+            print("Unknown exception occured. Check your internet connection?")
+            return None
+        
+    def _generate_bad_response_error(self,url,response):
         """Print out details of the bad response"""
         error_string = "Attempted to query " \
-                        + self._get_id_endpoint_url(id) \
+                        + url \
                         + ". Received an unsuccessful response (" \
                         + str(response.status_code) \
                         + ")."
